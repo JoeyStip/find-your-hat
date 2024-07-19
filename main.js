@@ -21,9 +21,26 @@ class Field {
     };
     generateField(w, h){
         let arr = [];
+        let hatCoor = {
+            x: Math.round(Math.random()*w),
+            y: Math.round(Math.random()*h)
+        };
         for(let i = 0; i < h; i++){
+            arr[i] = [];
             for(let j = 0; j < w; j++){
-                arr[i].push(fieldCharacter)
+                let x = Math.random()
+                let gameCharacter = ''
+                if( j==0 && i==0 ){
+                    gameCharacter = pathCharacter;
+                } else if( j==hatCoor.x && i==hatCoor.y) {
+                    gameCharacter = hat;
+                } else if(x>0.3 && x<0.5){
+                    gameCharacter = hole;
+                } else {
+                    gameCharacter = fieldCharacter; 
+                }
+
+                arr[i].push(gameCharacter)
             };
         };
         const myField = new Field(arr);
@@ -37,7 +54,7 @@ const myField = new Field([
     ['░', 'O','░']
 ])
 
-myField.generateField(3, 5);
+myField.generateField(9, 5);
 //myField.print()
 
 
