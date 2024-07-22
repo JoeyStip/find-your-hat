@@ -12,7 +12,17 @@ class Field {
         this.arr = arr;
         this.URHereX = 0;
         this.URHereY = 0;
+        this.gameIsRunning = false;
     };
+    runGame(w, h){
+        this.gameIsRunning = true;
+        this.generateField(w, h);
+        while(this.gameIsRunning){
+            this.print();
+            this.navigateField();
+        };
+    };
+
     print(){
         for(let i = 0; i < this.arr.length; i++){
             console.log(this.arr[i].join(''))
@@ -42,11 +52,10 @@ class Field {
             };
         };
         this.arr = arr;
-        this.print();
     };
     navigateField(){
         let dir = prompt("which way would you like to move?");
-        console.log(dir)
+        //console.log(dir)
         switch(dir){
             case "a": this.URHereX = this.URHereX-1
             break;
@@ -57,15 +66,34 @@ class Field {
             case "w": this.URHereY = this.URHereY-1
             break;
         };
-        //console.log(this.arr)
-        this.arr[this.URHereY][this.URHereX] = pathCharacter;
-        this.print();
+
+        let thisSpot = '';
+
+        if(
+            this.URHereX > this.arr[0].length ||
+            this.URHereX < 0 ||
+            this.URHereY > this.arr.length ||
+            this.URHereY < 0
+        ){
+            console.log("Out of bounds! Game over.");
+            this.gameIsRunning = false;
+        } else {
+            thisSpot = this.arr[this.URHereY][this.URHereX];
+        }
+        if(thisSpot == hole){
+            console.log("you fell in a hole! Game over.");
+            this.gameIsRunning = false;
+        } else if(thisSpot == hat){
+            console.log("You found your hat! You win!")
+            this.gameIsRunning = false;
+        } else if(thisSpot == fieldCharacter){
+            this.arr[this.URHereY][this.URHereX] = pathCharacter;
+        };
     }; 
 };
 
 const myField = new Field([[]]);
-myField.generateField(9, 5);
-myField.navigateField()
+myField.runGame(9, 9);
 
 //process.stdout.write("Which direction would you like to move?")
 //process.stdin.on('data', myField.navigateField)
