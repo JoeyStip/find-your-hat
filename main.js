@@ -7,18 +7,14 @@ const pathCharacter = '*';
 
 class Field {
     constructor(arr){
-        this.height = arr.length;
-        this.width = arr[0].length;
+        //this.height = arr.length;
+        //this.width = arr[0].length;
         this.arr = arr;
         this.URHereX = 0;
         this.URHereY = 0;
     };
-    test(){
-        console.log(this.URHereX, this.URHereY, this.arr, this.height, this.width)
-    };
     print(){
-        //console.log(this.URHereX, this.URHereY, this.arr, this.height, this.width)
-        for(let i = 0; i < this.height; i++){
+        for(let i = 0; i < this.arr.length; i++){
             console.log(this.arr[i].join(''))
         };
     };
@@ -42,39 +38,34 @@ class Field {
                 } else {
                     gameCharacter = fieldCharacter; 
                 }
-
                 arr[i].push(gameCharacter)
             };
         };
-        const myField = new Field(arr);
-        myField.print();
+        this.arr = arr;
+        this.print();
     };
-    navigateField(d){
-        console.log(this.URHereX, this.URHereY, this.arr, this.height, this.width)
-        let dir = d.toString().trim()
+    navigateField(){
+        let dir = prompt("which way would you like to move?");
         console.log(dir)
         switch(dir){
-            case "a": myField.URHereX = myField.URHereX-1
+            case "a": this.URHereX = this.URHereX-1
             break;
-            case "s": myField.URHereY = myField.URHereY+1
+            case "s": this.URHereY = this.URHereY+1
             break;
-            case "d": myField.URHereX = myField.URHereX+1
+            case "d": this.URHereX = this.URHereX+1
             break;
-            case "w": myField.URHereY = myField.URHereY-1
+            case "w": this.URHereY = this.URHereY-1
             break;
         };
-        //console.log('X:', myField.URHereX, 'Y:', myField.URHereY, 'height:', myField.height, 'width:', myField.width)
-        //console.log(this.arr);
-        //this.arr[this.URHereY][this.URHereX] = pathCharacter;
-        myField.print();
-    };
-    
+        //console.log(this.arr)
+        this.arr[this.URHereY][this.URHereX] = pathCharacter;
+        this.print();
+    }; 
 };
 
 const myField = new Field([[]]);
 myField.generateField(9, 5);
-//myField.print()
+myField.navigateField()
 
-
-process.stdout.write("Which direction would you like to move?")
-process.stdin.on('data', myField.test)
+//process.stdout.write("Which direction would you like to move?")
+//process.stdin.on('data', myField.navigateField)
