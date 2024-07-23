@@ -54,7 +54,7 @@ class Field {
         this.arr = arr;
     };
     navigateField(){
-        let dir = prompt("which way would you like to move?");
+        let dir = prompt("which way would you like to move? (use WASD keys)");
         //console.log(dir)
         switch(dir){
             case "a": this.URHereX = this.URHereX-1
@@ -70,9 +70,9 @@ class Field {
         let thisSpot = '';
 
         if(
-            this.URHereX > this.arr[0].length ||
+            this.URHereX >= this.arr[0].length ||
             this.URHereX < 0 ||
-            this.URHereY > this.arr.length ||
+            this.URHereY >= this.arr.length ||
             this.URHereY < 0
         ){
             console.log("Out of bounds! Game over.");
